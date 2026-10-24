@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知夏 · 个人主页 ｜ 韩系仿推特 高保真原型</title>
+<meta name="description" content="韩系清新风格的仿推特个人主页高保真可交互原型">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ==========================================================
+     SVG 精灵图：所有图标 / 头像 / 配图都在这里
+     换图只需替换 symbol 内容，页面结构不用动
+     ========================================================== -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- ---------- 通用图形 ---------- -->
+    <g id="blossom">
+      <circle r="4.4" cx="0" cy="-5" />
+      <circle r="4.4" cx="4.8" cy="-1.6" />
+      <circle r="4.4" cx="3" cy="4.1" />
+      <circle r="4.4" cx="-3" cy="4.1" />
+      <circle r="4.4" cx="-4.8" cy="-1.6" />
+      <circle r="2" fill="#EFA3AE" stroke="none" />
+    </g>
+
+    <!-- ---------- 图标 ---------- -->
+    <symbol id="i-home" viewBox="0 0 24 24">
+      <path d="M3.6 10.7 12 3.7l8.4 7v9.1a1.1 1.1 0 0 1-1.1 1.1h-4.7v-6.2H9.4v6.2H4.7a1.1 1.1 0 0 1-1.1-1.1z" />
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <circle cx="10.8" cy="10.8" r="6.6" />
+      <path d="m16 16 4.4 4.4" />
+    </symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24">
+      <path d="M18 9.6a6 6 0 1 0-12 0c0 4.6-1.9 6-1.9 6h15.8s-1.9-1.4-1.9-6" />
+      <path d="M9.9 19.4a2.3 2.3 0 0 0 4.2 0" />
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24">
+      <rect x="3.2" y="5.4" width="17.6" height="13.2" rx="2.6" />
+      <path d="m4.2 7.6 7.8 5.4 7.8-5.4" />
+    </symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24">
+      <path d="M6.4 3.6h11.2a1 1 0 0 1 1 1v15.2l-6.6-4.4-6.6 4.4V4.6a1 1 0 0 1 1-1z" fill="var(--fill,none)" />
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="8.2" r="3.9" />
+      <path d="M4.4 20.6c.6-3.7 3.7-5.9 7.6-5.9s7 2.2 7.6 5.9" />
+    </symbol>
+    <symbol id="i-user-plus" viewBox="0 0 24 24">
+      <circle cx="9.4" cy="8.4" r="3.6" />
+      <path d="M3.4 20c.5-3.4 3-5.4 6-5.4 1.2 0 2.3.3 3.2.9" />
+      <path d="M17.4 12.6v6M14.4 15.6h6" />
+    </symbol>
+    <symbol id="i-more" viewBox="0 0 24 24">
+      <circle cx="5.4" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="18.6" cy="12" r="1.5" fill="currentColor" stroke="none" />
+    </symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24">
+      <path d="M20.2 3.8a2.1 2.1 0 0 0-3 0L4.6 16.4 3 21l4.6-1.6L20.2 6.8a2.1 2.1 0 0 0 0-3z" />
+      <path d="m15.6 6.4 2 2" />
+    </symbol>
+    <symbol id="i-back" viewBox="0 0 24 24">
+      <path d="M14.8 4.8 7.6 12l7.2 7.2" />
+    </symbol>
+    <symbol id="i-reply" viewBox="0 0 24 24">
+      <path d="M20.8 11.6c0 3.9-3.9 7-8.8 7-1.1 0-2.2-.1-3.2-.4L3.2 20.4l1.5-3.6C3.4 15.5 3.2 13.6 3.2 11.6c0-3.9 3.9-7 8.8-7s8.8 3.1 8.8 7z" />
+    </symbol>
+    <symbol id="i-rt" viewBox="0 0 24 24">
+      <path d="M6.8 8.4h9.4a2.6 2.6 0 0 1 2.6 2.6v2.6" />
+      <path d="m15.4 5.2 3.6 3.2-3.6 3.2" />
+      <path d="M17.2 15.6H7.8a2.6 2.6 0 0 1-2.6-2.6v-2.6" />
+      <path d="m8.6 18.8-3.6-3.2 3.6-3.2" />
+    </symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24">
+      <path d="M12 20.3 4.8 13.1a4.7 4.7 0 0 1 6.6-6.7l.6.6.6-.6a4.7 4.7 0 0 1 6.6 6.7z" fill="var(--fill,none)" />
+    </symbol>
+    <symbol id="i-views" viewBox="0 0 24 24">
+      <path d="M4.6 20.2v-7.4" stroke-width="2.6" />
+      <path d="M12 20.2V6.2" stroke-width="2.6" />
+      <path d="M19.4 20.2v-4.2" stroke-width="2.6" />
+    </symbol>
+    <symbol id="i-share" viewBox="0 0 24 24">
+      <path d="M12 15.4V3.6" />
+      <path d="m8.2 7.2 3.8-3.6 3.8 3.6" />
+      <path d="M5 13.4V19a1.6 1.6 0 0 0 1.6 1.6h10.8A1.6 1.6 0 0 0 19 19v-5.6" />
+    </symbol>
+    <symbol id="i-image" viewBox="0 0 24 24">
+      <rect x="3.2" y="4.6" width="17.6" height="14.8" rx="3" />
+      <circle cx="8.6" cy="9.8" r="1.6" />
+      <path d="m4.6 17.4 4.8-4 3.6 2.8 3.4-2.4 4.4 3.2" />
+    </symbol>
+    <symbol id="i-gif" viewBox="0 0 24 24">
+      <rect x="3.2" y="5.4" width="17.6" height="13.2" rx="3" />
+      <text x="12" y="15.4" text-anchor="middle" font-size="7.4" font-weight="700" font-family="system-ui, sans-serif" fill="currentColor" stroke="none">GIF</text>
+    </symbol>
+    <symbol id="i-poll" viewBox="0 0 24 24">
+      <path d="M4.6 20.2h14.8" />
+      <path d="M8 17V11" />
+      <path d="M12.6 17V6.4" />
+      <path d="M17.2 17v-4" />
+    </symbol>
+    <symbol id="i-emoji" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.6" />
+      <path d="M8.8 14.2a4 4 0 0 0 6.4 0" />
+      <circle cx="9.4" cy="10" r="1.1" fill="currentColor" stroke="none" />
+      <circle cx="14.6" cy="10" r="1.1" fill="currentColor" stroke="none" />
+    </symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24">
+      <rect x="3.4" y="5.4" width="17.2" height="15" rx="2.8" />
+      <path d="M3.4 10.2h17.2" />
+      <path d="M8.2 3.4v3.4M15.8 3.4v3.4" />
+    </symbol>
+    <symbol id="i-loc" viewBox="0 0 24 24">
+      <path d="M12 21.2s6.4-6 6.4-10.6a6.4 6.4 0 1 0-12.8 0C5.6 15.2 12 21.2 12 21.2z" />
+      <circle cx="12" cy="10.4" r="2.4" />
+    </symbol>
+    <symbol id="i-link" viewBox="0 0 24 24">
+      <path d="M10.2 13.8a3.6 3.6 0 0 0 5.1 0l2.5-2.5a3.6 3.6 0 0 0-5.1-5.1l-1.3 1.3" />
+      <path d="M13.8 10.2a3.6 3.6 0 0 0-5.1 0l-2.5 2.5a3.6 3.6 0 0 0 5.1 5.1l1.3-1.3" />
+    </symbol>
+    <symbol id="i-verified" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9.8" fill="currentColor" stroke="none" />
+      <path d="m7.9 12.3 2.9 2.9 5.4-5.8" stroke="#FFFFFF" stroke-width="2.1" fill="none" />
+    </symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24">
+      <path d="M9 3.8h6l-.7 5.4 3.3 3.3H6.4l3.3-3.3z" />
+      <path d="M12 12.6V21" />
+    </symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24">
+      <path d="M12 3.4 13.8 9.2l5.8 1.8-5.8 1.8L12 18.6l-1.8-5.8L4.4 11l5.8-1.8z" />
+      <path d="M18.6 16.4 19.4 19l2.6.8-2.6.8-.8 2.6" opacity=".7" />
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24">
+      <path d="m9.4 5.6 6.4 6.4-6.4 6.4" />
+    </symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24">
+      <path d="M20.4 14.8A8.6 8.6 0 0 1 9.2 3.6a8.8 8.8 0 1 0 11.2 11.2z" />
+    </symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4.2" />
+      <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" />
+    </symbol>
+    <symbol id="i-x" viewBox="0 0 24 24">
+      <path d="m6 6 12 12M18 6 6 18" />
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14" />
+    </symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24">
+      <path d="M11 5.4 6.4 9.4H3.6v5.2h2.8l4.6 4z" />
+      <path d="m16 9.8 4 4.4M20 9.8l-4 4.4" />
+    </symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24">
+      <path d="M6 20.6V3.6" />
+      <path d="M6 4.4h12.4l-2 5 2 5H6z" />
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <path d="m5 12.8 4.6 4.6L19 6.6" />
+    </symbol>
+
+    <!-- ---------- 头像（插画风，可替换成真图） ---------- -->
+    <symbol id="av-main" viewBox="0 0 100 100">
+      <linearGradient id="g-main" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#DDF0E7" /><stop offset="1" stop-color="#D9E7F3" />
+      </linearGradient>
+      <rect width="100" height="100" fill="url(#g-main)" />
+      <circle cx="50" cy="46" r="31" fill="#6E5849" />
+      <path d="M13 100c2.5-17 16-26 37-26s34.5 9 37 26z" fill="#CFE6DA" />
+      <ellipse cx="50" cy="57" rx="21" ry="24" fill="#FAE7DA" />
+      <path d="M27 51c1-16 10.5-25 23-25s22 9 23 25c-7-8-14-11-23-11s-16 3-23 11z" fill="#6E5849" />
+      <circle cx="42.4" cy="57.4" r="2.3" fill="#4C3F38" />
+      <circle cx="57.6" cy="57.4" r="2.3" fill="#4C3F38" />
+      <ellipse cx="35" cy="63.4" rx="4.6" ry="2.8" fill="#F3BDBD" opacity=".85" />
+      <ellipse cx="65" cy="63.4" rx="4.6" ry="2.8" fill="#F3BDBD" opacity=".85" />
+      <path d="M46 66c2.6 2.6 5.4 2.6 8 0" stroke="#4C3F38" stroke-width="1.8" fill="none" stroke-linecap="round" />
+      <g transform="translate(71.5 37)" fill="#F8CDD3">
+        <circle r="3.1" cx="0" cy="-4.4" /><circle r="3.1" cx="4.2" cy="-1.4" /><circle r="3.1" cx="2.6" cy="3.6" />
+        <circle r="3.1" cx="-2.6" cy="3.6" /><circle r="3.1" cx="-4.2" cy="-1.4" />
+        <circle r="1.6" fill="#F6D98C" />
+      </g>
+    </symbol>
+
+    <symbol id="av-sora" viewBox="0 0 100 100">
+      <linearGradient id="g-sora" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#EDE6F7" /><stop offset="1" stop-color="#E2ECF7" />
+      </linearGradient>
+      <rect width="100" height="100" fill="url(#g-sora)" />
+      <circle cx="50" cy="47" r="30" fill="#4C4441" />
+      <path d="M14 100c2-16 16-25 36-25s34 9 36 25z" fill="#CBD7E9" />
+      <ellipse cx="50" cy="57" rx="20.5" ry="23" fill="#FBE9DD" />
+      <path d="M29 52c1-15 10-23 21-23s20 8 21 23c-6-7-13-10-21-10s-15 3-21 10z" fill="#4C4441" />
+      <path d="M30 46c-3 6-3 14 0 20M70 46c3 6 3 14 0 20" stroke="#4C4441" stroke-width="6" fill="none" stroke-linecap="round" />
+      <circle cx="42.6" cy="57" r="2.2" fill="#43393A" />
+      <circle cx="57.4" cy="57" r="2.2" fill="#43393A" />
+      <circle cx="42.6" cy="57" r="6.4" fill="none" stroke="#8A7F7C" stroke-width="1.2" />
+      <circle cx="57.4" cy="57" r="6.4" fill="none" stroke="#8A7F7C" stroke-width="1.2" />
+      <path d="M49 57h2.4" stroke="#8A7F7C" stroke-width="1.2" />
+      <path d="M46 66c2.4 2.4 5.6 2.4 8 0" stroke="#43393A" stroke-width="1.7" fill="none" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="av-momo" viewBox="0 0 100 100">
+      <linearGradient id="g-momo" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FBEAEC" /><stop offset="1" stop-color="#F7EDE3" />
+      </linearGradient>
+      <rect width="100" height="100" fill="url(#g-momo)" />
+      <circle cx="50" cy="46" r="29" fill="#7A5B45" />
+      <circle cx="50" cy="15" r="8.5" fill="#7A5B45" />
+      <path d="M15 100c2-15 15-24 35-24s33 9 35 24z" fill="#F0D9C9" />
+      <ellipse cx="50" cy="57" rx="20" ry="22.5" fill="#FCEBDF" />
+      <path d="M30 52c1-14 9.5-22 20-22s19 8 20 22c-6-7-12-10-20-10s-14 3-20 10z" fill="#7A5B45" />
+      <circle cx="42.8" cy="57" r="2.2" fill="#4A3E36" />
+      <circle cx="57.2" cy="57" r="2.2" fill="#4A3E36" />
+      <ellipse cx="35.6" cy="63" rx="4.4" ry="2.6" fill="#F5BFC0" opacity=".85" />
+      <ellipse cx="64.4" cy="63" rx="4.4" ry="2.6" fill="#F5BFC0" opacity=".85" />
+      <path d="M46.4 65.6c2.2 2.6 5 2.6 7.2 0" stroke="#4A3E36" stroke-width="1.7" fill="none" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="av-cafe" viewBox="0 0 100 100">
+      <linearGradient id="g-cafe" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#E4F1EA" /><stop offset="1" stop-color="#EAF1F6" />
+      </linearGradient>
+      <rect width="100" height="100" fill="url(#g-cafe)" />
+      <circle cx="50" cy="47" r="29" fill="#3F3A36" />
+      <path d="M14 100c2-15 15-24 36-24s34 9 36 24z" fill="#DCE3D6" />
+      <ellipse cx="50" cy="57" rx="20.5" ry="23" fill="#F6E2D3" />
+      <path d="M30 51c1-14 9.5-22 20-22s19 8 20 22c-6-7-12-10-20-10s-14 3-20 10z" fill="#3F3A36" />
+      <circle cx="42.6" cy="57" r="2.2" fill="#3A322E" />
+      <circle cx="57.4" cy="57" r="2.2" fill="#3A322E" />
+      <ellipse cx="35.4" cy="63" rx="4.4" ry="2.6" fill="#F3BABA" opacity=".8" />
+      <ellipse cx="64.6" cy="63" rx="4.4" ry="2.6" fill="#F3BABA" opacity=".8" />
+      <path d="M46.4 66c2.4 2.2 5.2 2.2 7.6 0" stroke="#3A322E" stroke-width="1.7" fill="none" stroke-linecap="round" />
+      <circle cx="77" cy="23" r="8" fill="#F4D9A8" />
+    </symbol>
+
+    <!-- ---------- 配图（插画风占位，可整组替换成照片） ---------- -->
+    <symbol id="ph-window" viewBox="0 0 160 100">
+      <linearGradient id="g-win" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#EAF4EE" /><stop offset="1" stop-color="#DCEBF3" />
+      </linearGradient>
+      <rect width="160" height="100" fill="url(#g-win)" />
+      <rect x="20" y="10" width="58" height="56" rx="3" fill="#FCFEFC" opacity=".82" />
+      <rect x="20" y="10" width="58" height="56" rx="3" fill="none" stroke="#C6D9CF" stroke-width="2" />
+      <path d="M49 10v56M20 38h58" stroke="#C6D9CF" stroke-width="2" />
+      <path d="M78 64 118 100H74z" fill="#FFFFFF" opacity=".3" />
+      <rect x="0" y="70" width="160" height="30" fill="#F2E7D8" />
+      <rect x="0" y="70" width="160" height="2.5" fill="#E7DAC6" />
+      <path d="M104 62h26l-4 20h-18z" fill="#EBC3B2" />
+      <rect x="102" y="57" width="30" height="6" rx="3" fill="#DEB09E" />
+      <path d="M117 57C113 41 100 37 92 41c1 10 10 18 25 16z" fill="#A9D0B9" />
+      <path d="M117 57C119 37 132 29 142 33c-2 12-11 22-25 24z" fill="#8FC4A9" />
+      <path d="M117 57c8-11 20-13 27-8-5 10-15 12-27 8z" fill="#BCE1D3" />
+      <path d="M117 57c-9-12-22-10-27-3 8 8 18 6 27 3z" fill="#9BCBAF" />
+    </symbol>
+
+    <symbol id="ph-latte" viewBox="0 0 160 100">
+      <linearGradient id="g-latte" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#FCF4E9" /><stop offset="1" stop-color="#F3E4D2" />
+      </linearGradient>
+      <rect width="160" height="100" fill="url(#g-latte)" />
+      <ellipse cx="80" cy="90" rx="44" ry="5" fill="#E6D6C0" opacity=".75" />
+      <circle cx="80" cy="60" r="35" fill="#F7EADA" />
+      <path d="M58 46h44v18a16 16 0 0 1-16 16H74a16 16 0 0 1-16-16z" fill="#FFFFFF" />
+      <path d="M102 51c9 0 9 15 0 15" stroke="#FFFFFF" stroke-width="5" fill="none" />
+      <ellipse cx="80" cy="46" rx="22" ry="6.5" fill="#F0E1CF" />
+      <ellipse cx="80" cy="46" rx="17.5" ry="4.8" fill="#C08A63" />
+      <path d="M80 43.5c2.6 2.4 5.6 3.4 5.6 1s-3-4.6-5.6-1z" fill="#F8F1E8" opacity=".92" />
+      <path d="M73 33c-3.4-4 1.6-6.6 0-10M80 32c-3.4-4.6 2.4-7 1-11M87 33c-3.4-4 1.6-6.6 0-10" stroke="#DCC9B2" stroke-width="2" fill="none" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="ph-flower" viewBox="0 0 160 100">
+      <linearGradient id="g-flo" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FDF2F1" /><stop offset="1" stop-color="#F7EAF3" />
+      </linearGradient>
+      <rect width="160" height="100" fill="url(#g-flo)" />
+      <circle cx="36" cy="26" r="24" fill="#FBE4E6" opacity=".75" />
+      <circle cx="126" cy="78" r="26" fill="#EFE4F4" opacity=".7" />
+      <path d="M8 98C42 82 66 62 100 46c13-6 24-9 38-8" stroke="#B79A85" stroke-width="3" fill="none" stroke-linecap="round" />
+      <path d="M100 46c-4-10-14-14-22-12 2 8 10 13 22 12z" fill="#A9D0B9" />
+      <use href="#blossom" x="100" y="46" fill="#F8D3D8" />
+      <g transform="translate(126 30) scale(.85)"><use href="#blossom" fill="#FBE0E4" /></g>
+      <g transform="translate(70 62) scale(.9)"><use href="#blossom" fill="#F6C9D0" /></g>
+      <g transform="translate(46 78) scale(.8)"><use href="#blossom" fill="#FBDDE2" /></g>
+      <g transform="translate(138 54) scale(.7)"><use href="#blossom" fill="#F3C3CA" /></g>
+    </symbol>
+
+    <symbol id="ph-cat" viewBox="0 0 160 100">
+      <linearGradient id="g-cat" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#F5F1FB" /><stop offset="1" stop-color="#EDF2FA" />
+      </linearGradient>
+      <rect width="160" height="100" fill="url(#g-cat)" />
+      <circle cx="130" cy="22" r="16" fill="#FFFFFF" opacity=".65" />
+      <ellipse cx="80" cy="90" rx="38" ry="6" fill="#E4DFF0" />
+      <path d="M56 88c0-16 10-25 24-25s24 9 24 25z" fill="#F8E9DC" />
+      <path d="M64 64 60 46l15 9z" fill="#F8E9DC" />
+      <path d="M96 64 100 46l-15 9z" fill="#F8E9DC" />
+      <path d="M66 60.5 63.5 50l9 5.4z" fill="#F3C9C9" />
+      <path d="M94 60.5 96.5 50l-9 5.4z" fill="#F3C9C9" />
+      <circle cx="80" cy="63" r="19.5" fill="#FCF1E7" />
+      <path d="M70 60.5c1.8 2 4.6 2 6.4 0M83.6 60.5c1.8 2 4.6 2 6.4 0" stroke="#6B5B50" stroke-width="2" fill="none" stroke-linecap="round" />
+      <path d="M80 66.5v2.2" stroke="#C08A7A" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M80 68.7c-1.6 2-4.2 1.6-4.2 0M80 68.7c1.6 2 4.2 1.6 4.2 0" stroke="#6B5B50" stroke-width="1.5" fill="none" stroke-linecap="round" />
+      <ellipse cx="67" cy="67.5" rx="4.4" ry="2.6" fill="#F5C0C0" opacity=".85" />
+      <ellipse cx="93" cy="67.5" rx="4.4" ry="2.6" fill="#F5C0C0" opacity=".85" />
+      <path d="M104 86c9 0 13-5 11-11" stroke="#F8E9DC" stroke-width="6" fill="none" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="ph-book" viewBox="0 0 160 100">
+      <linearGradient id="g-book" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#EFF4F8" /><stop offset="1" stop-color="#E3EAF0" />
+      </linearGradient>
+      <rect width="160" height="100" fill="url(#g-book)" />
+      <rect x="0" y="66" width="160" height="34" fill="#E7EDF2" />
+      <path d="M30 62 78 50v30L30 92z" fill="#FFFDF8" />
+      <path d="M78 50l52 12v30L78 80z" fill="#FBF6EC" />
+      <path d="M78 50v30" stroke="#DED4C5" stroke-width="2" />
+      <path d="M38 68l28-6M38 74l28-6M38 80l20-4" stroke="#DCCFC0" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M88 64l28 6M88 70l28 6M88 76l20 4" stroke="#DCCFC0" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M78 50l10 4v13l-10-4z" fill="#F5C9C9" />
+    </symbol>
+
+    <symbol id="ph-sky" viewBox="0 0 160 100">
+      <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#DCEDF9" /><stop offset="1" stop-color="#F8F0E8" />
+      </linearGradient>
+      <rect width="160" height="100" fill="url(#g-sky)" />
+      <circle cx="118" cy="30" r="15" fill="#FDEBC9" />
+      <g fill="#FFFFFF" opacity=".92">
+        <ellipse cx="44" cy="44" rx="24" ry="10" /><ellipse cx="60" cy="37" rx="14" ry="9" />
+        <ellipse cx="98" cy="68" rx="27" ry="9" /><ellipse cx="82" cy="64" rx="12" ry="7" />
+      </g>
+      <ellipse cx="44" cy="50" rx="24" ry="4" fill="#C9DCEB" opacity=".45" />
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ==========================================================
+     页面
+     ========================================================== -->
+<div class="app">
+
+  <!-- ---------------- 左：导航 ---------------- -->
+  <aside class="side">
+    <div>
+      <a class="brand" href="#">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 15.5c3.5-9 7-3 9.5-7.5 1.6-2.9 3.6-3.4 6-2.5" />
+            <circle cx="18.4" cy="18.4" r="2" />
+          </svg>
+        </span>
+        <span class="brand-name">知夏<small>jixia · studio</small></span>
+      </a>
+
+      <nav class="side-nav" aria-label="主导航">
+        <a class="nav-item" href="#">
+          <svg class="ic"><use href="#i-home" /></svg><span>首页</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg class="ic"><use href="#i-search" /></svg><span>探索</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg class="ic"><use href="#i-bell" /></svg><span>通知</span>
+          <em class="nav-badge">3</em>
+        </a>
+        <a class="nav-item" href="#">
+          <svg class="ic"><use href="#i-mail" /></svg><span>私信</span>
+          <em class="nav-badge">2</em>
+        </a>
+        <a class="nav-item" href="#">
+          <svg class="ic"><use href="#i-bookmark" /></svg><span>书签</span>
+        </a>
+        <a class="nav-item is-active" href="#" aria-current="page">
+          <svg class="ic"><use href="#i-user" /></svg><span>我的主页</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg class="ic"><use href="#i-more" /></svg><span>更多</span>
+        </a>
+      </nav>
+
+      <button class="btn-post" type="button" data-open-composer>
+        <svg class="ic"><use href="#i-pen" /></svg><span>发帖</span>
+      </button>
+    </div>
+
+    <div class="side-foot">
+      <button class="theme-toggle" type="button" id="theme-toggle">
+        <svg class="ic" id="theme-icon"><use href="#i-moon" /></svg>
+        <span id="theme-label">夜樱模式</span>
+      </button>
+
+      <button class="account" type="button">
+        <span class="av av-40"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+        <span class="account-meta">
+          <b>知夏</b>
+          <span>@zhixia</span>
+        </span>
+        <svg class="ic"><use href="#i-more" /></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ---------------- 中：主页 ---------------- -->
+  <main class="col-main">
+
+    <!-- 顶栏 -->
+    <div class="topbar" id="topbar">
+      <button class="icon-btn" type="button" id="back-btn" aria-label="返回顶部">
+        <svg class="ic"><use href="#i-back" /></svg>
+      </button>
+      <div>
+        <div class="topbar-title">知夏</div>
+        <div class="topbar-sub">1,284 条推文</div>
+      </div>
+      <div style="margin-left:auto; display:flex; gap:2px;">
+        <button class="icon-btn" type="button" aria-label="搜索"><svg class="ic"><use href="#i-search" /></svg></button>
+        <button class="icon-btn" type="button" aria-label="更多"><svg class="ic"><use href="#i-more" /></svg></button>
+      </div>
+    </div>
+
+    <!-- 资料头 -->
+    <header class="profile-head">
+      <div class="banner">
+        <div class="banner-fill"></div>
+        <svg class="banner-art" viewBox="0 0 600 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <g fill="#FFFFFF" opacity=".6">
+            <circle cx="92" cy="44" r="34" /><circle cx="128" cy="36" r="21" />
+            <circle cx="466" cy="152" r="40" /><circle cx="504" cy="142" r="23" />
+          </g>
+          <g stroke="#FFFFFF" stroke-width="2" fill="none" opacity=".55" stroke-linecap="round">
+            <path d="M512 36c14-10 26-12 38-6" />
+            <path d="M520 50c10-14 22-18 34-16" />
+            <path d="M40 150c16-8 30-8 44 0" />
+          </g>
+        </svg>
+      </div>
+
+      <div class="profile-main">
+        <div class="profile-actions">
+          <div class="avatar-wrap">
+            <span class="av"><svg viewBox="0 0 100 100" role="img" aria-label="知夏的头像"><use href="#av-main" /></svg></span>
+          </div>
+          <div class="profile-btns">
+            <button class="btn btn-ghost" type="button" data-act="edit-profile">
+              <svg class="ic"><use href="#i-pen" /></svg>编辑资料
+            </button>
+            <button class="btn btn-ghost" type="button" data-act="more" style="padding:0; width:37px;" aria-label="更多">
+              <svg class="ic"><use href="#i-more" /></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-id">
+          <h1 class="profile-name">
+            知夏
+            <svg class="badge" viewBox="0 0 24 24" role="img" aria-label="已认证"><use href="#i-verified" /></svg>
+          </h1>
+          <div class="profile-handle">@zhixia</div>
+        </div>
+
+        <p class="profile-bio">
+          把日子过成一杯拿铁 ☁️ 视觉设计 / 品牌 / 插画<br>
+          相信留白的力量，也相信好的设计会呼吸。<br>
+          <span class="kr">오늘도 좋은 하루 되세요 ✿</span>
+        </p>
+
+        <div class="meta">
+          <span class="meta-item"><svg class="ic"><use href="#i-loc" /></svg>杭州 · 首尔</span>
+          <span class="meta-item"><svg class="ic"><use href="#i-link" /></svg><a href="#">zhixia.studio</a></span>
+          <span class="meta-item"><svg class="ic"><use href="#i-calendar" /></svg>2021 年 3 月加入</span>
+        </div>
+
+        <div class="stats">
+          <a class="stat" href="#"><b>186</b> 关注</a>
+          <a class="stat" href="#"><b id="follower-count">3,482</b> 粉丝</a>
+        </div>
+
+        <div class="mutual">
+          <span class="mutual-stack">
+            <span class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-sora" /></svg></span>
+            <span class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-momo" /></svg></span>
+            <span class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-cafe" /></svg></span>
+          </span>
+          <span>由 <b>sora.type</b> 和另外 12 位朋友关注</span>
+        </div>
+        <div class="spacer-14"></div>
+      </div>
+    </header>
+
+    <!-- 内容 Tab -->
+    <nav class="tabs" role="tablist" aria-label="主页内容">
+      <button class="tab is-active" role="tab" aria-selected="true" data-tab="posts">帖子</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="replies">回复</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="media">媒体</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="likes">喜欢</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="highlight">高亮</button>
+      <span class="tab-indicator" id="tab-indicator"></span>
+    </nav>
+
+    <div class="panels">
+
+      <!-- ============ 帖子 ============ -->
+      <section class="panel" data-panel="posts" id="panel-posts" role="tabpanel">
+        <div class="composer-prompt">
+          <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+          <button class="prompt-input" type="button" data-open-composer>有什么新鲜事想分享？</button>
+          <span class="prompt-tools">
+            <button class="icon-btn" type="button" data-open-composer aria-label="配图"><svg class="ic"><use href="#i-image" /></svg></button>
+            <button class="icon-btn" type="button" data-open-composer aria-label="表情"><svg class="ic"><use href="#i-emoji" /></svg></button>
+          </span>
+        </div>
+
+        <button class="new-pill" type="button" id="new-pill">↑ 2 条新推文</button>
+
+        <div class="feed" id="feed">
+
+          <!-- 置顶推文 -->
+          <article class="tweet reveal">
+            <a class="tweet-av" href="#" aria-label="知夏">
+              <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+            </a>
+            <div class="tweet-body">
+              <div class="pin-row"><svg class="ic"><use href="#i-pin" /></svg>已置顶</div>
+              <header class="tweet-head">
+                <div class="who">
+                  <span class="name">知夏</span>
+                  <svg class="badge" viewBox="0 0 24 24"><use href="#i-verified" /></svg>
+                  <span class="handle">@zhixia</span><span class="dot">·</span><span class="time">3月12日</span>
+                </div>
+                <button class="more" type="button" data-act="more" aria-label="更多操作"><svg class="ic"><use href="#i-more" /></svg></button>
+              </header>
+              <p class="tweet-text">嗨，我是知夏 🌿
+一个把「干净」和「温柔」当作审美底线的视觉设计师。
+做品牌、做界面，也画一点小小的插画。
+这里记录我的日常、草稿，和一些还没长成形的想法。
+—— 欢迎来坐坐 ☁️</p>
+              <div class="media">
+                <div class="media-grid g1">
+                  <div class="media-item" data-zoom>
+                    <svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-window" /></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="tweet-actions">
+                <button class="act act-reply" type="button" data-act="reply" data-handle="@zhixia">
+                  <span class="act-ico"><svg class="ic"><use href="#i-reply" /></svg></span><span class="act-n">6</span>
+                </button>
+                <button class="act act-rt" type="button" data-act="retweet" data-count="12" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-rt" /></svg></span><span class="act-n">12</span>
+                </button>
+                <button class="act act-like" type="button" data-act="like" data-count="128" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-heart" /></svg><span class="burst"></span></span><span class="act-n">128</span>
+                </button>
+                <span class="act act-views">
+                  <span class="act-ico"><svg class="ic"><use href="#i-views" /></svg></span><span class="act-n">3,421</span>
+                </span>
+                <button class="act act-bm" type="button" data-act="bookmark" aria-pressed="false" aria-label="收藏">
+                  <span class="act-ico"><svg class="ic"><use href="#i-bookmark" /></svg></span>
+                </button>
+                <button class="act act-share" type="button" data-act="share" aria-label="分享">
+                  <span class="act-ico"><svg class="ic"><use href="#i-share" /></svg></span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 单图推文 -->
+          <article class="tweet reveal">
+            <a class="tweet-av" href="#" aria-label="知夏">
+              <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+            </a>
+            <div class="tweet-body">
+              <header class="tweet-head">
+                <div class="who">
+                  <span class="name">知夏</span>
+                  <svg class="badge" viewBox="0 0 24 24"><use href="#i-verified" /></svg>
+                  <span class="handle">@zhixia</span><span class="dot">·</span><span class="time">5小时</span>
+                </div>
+                <button class="more" type="button" data-act="more" aria-label="更多操作"><svg class="ic"><use href="#i-more" /></svg></button>
+              </header>
+              <p class="tweet-text">上午的光落在桌角，咖啡还热着。
+今天只做一件事：把这份提案改到自己满意为止 ☕️</p>
+              <div class="media">
+                <div class="media-grid g1">
+                  <div class="media-item" data-zoom>
+                    <svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-latte" /></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="tweet-actions">
+                <button class="act act-reply" type="button" data-act="reply" data-handle="@zhixia">
+                  <span class="act-ico"><svg class="ic"><use href="#i-reply" /></svg></span><span class="act-n">3</span>
+                </button>
+                <button class="act act-rt" type="button" data-act="retweet" data-count="8" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-rt" /></svg></span><span class="act-n">8</span>
+                </button>
+                <button class="act act-like" type="button" data-act="like" data-count="96" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-heart" /></svg><span class="burst"></span></span><span class="act-n">96</span>
+                </button>
+                <span class="act act-views">
+                  <span class="act-ico"><svg class="ic"><use href="#i-views" /></svg></span><span class="act-n">2,108</span>
+                </span>
+                <button class="act act-bm" type="button" data-act="bookmark" aria-pressed="false" aria-label="收藏">
+                  <span class="act-ico"><svg class="ic"><use href="#i-bookmark" /></svg></span>
+                </button>
+                <button class="act act-share" type="button" data-act="share" aria-label="分享">
+                  <span class="act-ico"><svg class="ic"><use href="#i-share" /></svg></span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 引用推文 -->
+          <article class="tweet reveal">
+            <a class="tweet-av" href="#" aria-label="知夏">
+              <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+            </a>
+            <div class="tweet-body">
+              <header class="tweet-head">
+                <div class="who">
+                  <span class="name">知夏</span>
+                  <svg class="badge" viewBox="0 0 24 24"><use href="#i-verified" /></svg>
+                  <span class="handle">@zhixia</span><span class="dot">·</span><span class="time">昨天</span>
+                </div>
+                <button class="more" type="button" data-act="more" aria-label="更多操作"><svg class="ic"><use href="#i-more" /></svg></button>
+              </header>
+              <p class="tweet-text">最近很喜欢这句话：好的排版不是让人看见设计，而是让人忘记设计。</p>
+              <div class="quote">
+                <div class="quote-head">
+                  <span class="av"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-sora" /></svg></span>
+                  <span class="name">sora</span>
+                  <svg class="badge" viewBox="0 0 24 24" style="width:14px;height:14px;"><use href="#i-verified" /></svg>
+                  <span class="handle">@sora.type</span><span class="dot">·</span><span class="time">3月10日</span>
+                </div>
+                <p class="quote-text">留白不是空的，是留给呼吸的。</p>
+              </div>
+              <div class="tweet-actions">
+                <button class="act act-reply" type="button" data-act="reply" data-handle="@zhixia">
+                  <span class="act-ico"><svg class="ic"><use href="#i-reply" /></svg></span><span class="act-n">9</span>
+                </button>
+                <button class="act act-rt" type="button" data-act="retweet" data-count="24" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-rt" /></svg></span><span class="act-n">24</span>
+                </button>
+                <button class="act act-like" type="button" data-act="like" data-count="310" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-heart" /></svg><span class="burst"></span></span><span class="act-n">310</span>
+                </button>
+                <span class="act act-views">
+                  <span class="act-ico"><svg class="ic"><use href="#i-views" /></svg></span><span class="act-n">8,760</span>
+                </span>
+                <button class="act act-bm" type="button" data-act="bookmark" aria-pressed="false" aria-label="收藏">
+                  <span class="act-ico"><svg class="ic"><use href="#i-bookmark" /></svg></span>
+                </button>
+                <button class="act act-share" type="button" data-act="share" aria-label="分享">
+                  <span class="act-ico"><svg class="ic"><use href="#i-share" /></svg></span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 纯文字推文 -->
+          <article class="tweet reveal">
+            <a class="tweet-av" href="#" aria-label="知夏">
+              <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+            </a>
+            <div class="tweet-body">
+              <header class="tweet-head">
+                <div class="who">
+                  <span class="name">知夏</span>
+                  <svg class="badge" viewBox="0 0 24 24"><use href="#i-verified" /></svg>
+                  <span class="handle">@zhixia</span><span class="dot">·</span><span class="time">2天</span>
+                </div>
+                <button class="more" type="button" data-act="more" aria-label="更多操作"><svg class="ic"><use href="#i-more" /></svg></button>
+              </header>
+              <p class="tweet-text">做设计第七年，最大的变化是不再急着填满画面。
+空一点，才装得下情绪。</p>
+              <div class="tweet-actions">
+                <button class="act act-reply" type="button" data-act="reply" data-handle="@zhixia">
+                  <span class="act-ico"><svg class="ic"><use href="#i-reply" /></svg></span><span class="act-n">4</span>
+                </button>
+                <button class="act act-rt" type="button" data-act="retweet" data-count="11" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-rt" /></svg></span><span class="act-n">11</span>
+                </button>
+                <button class="act act-like" type="button" data-act="like" data-count="156" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-heart" /></svg><span class="burst"></span></span><span class="act-n">156</span>
+                </button>
+                <span class="act act-views">
+                  <span class="act-ico"><svg class="ic"><use href="#i-views" /></svg></span><span class="act-n">4,312</span>
+                </span>
+                <button class="act act-bm" type="button" data-act="bookmark" aria-pressed="false" aria-label="收藏">
+                  <span class="act-ico"><svg class="ic"><use href="#i-bookmark" /></svg></span>
+                </button>
+                <button class="act act-share" type="button" data-act="share" aria-label="分享">
+                  <span class="act-ico"><svg class="ic"><use href="#i-share" /></svg></span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 双图推文 -->
+          <article class="tweet reveal">
+            <a class="tweet-av" href="#" aria-label="知夏">
+              <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+            </a>
+            <div class="tweet-body">
+              <header class="tweet-head">
+                <div class="who">
+                  <span class="name">知夏</span>
+                  <svg class="badge" viewBox="0 0 24 24"><use href="#i-verified" /></svg>
+                  <span class="handle">@zhixia</span><span class="dot">·</span><span class="time">3天</span>
+                </div>
+                <button class="more" type="button" data-act="more" aria-label="更多操作"><svg class="ic"><use href="#i-more" /></svg></button>
+              </header>
+              <p class="tweet-text">周末在花市带回来一小枝，插在玻璃瓶里，房间忽然就春天了 🌸</p>
+              <div class="media">
+                <div class="media-grid g2">
+                  <div class="media-item" data-zoom>
+                    <svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-flower" /></svg>
+                  </div>
+                  <div class="media-item" data-zoom>
+                    <svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-cat" /></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="tweet-actions">
+                <button class="act act-reply" type="button" data-act="reply" data-handle="@zhixia">
+                  <span class="act-ico"><svg class="ic"><use href="#i-reply" /></svg></span><span class="act-n">7</span>
+                </button>
+                <button class="act act-rt" type="button" data-act="retweet" data-count="19" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-rt" /></svg></span><span class="act-n">19</span>
+                </button>
+                <button class="act act-like" type="button" data-act="like" data-count="243" aria-pressed="false">
+                  <span class="act-ico"><svg class="ic"><use href="#i-heart" /></svg><span class="burst"></span></span><span class="act-n">243</span>
+                </button>
+                <span class="act act-views">
+                  <span class="act-ico"><svg class="ic"><use href="#i-views" /></svg></span><span class="act-n">6,210</span>
+                </span>
+                <button class="act act-bm" type="button" data-act="bookmark" aria-pressed="false" aria-label="收藏">
+                  <span class="act-ico"><svg class="ic"><use href="#i-bookmark" /></svg></span>
+                </button>
+                <button class="act act-share" type="button" data-act="share" aria-label="分享">
+                  <span class="act-ico"><svg class="ic"><use href="#i-share" /></svg></span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ============ 回复 ============ -->
+      <section class="panel" data-panel="replies" id="panel-replies" role="tabpanel" hidden>
+        <article class="tweet">
+          <a class="tweet-av" href="#">
+            <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+          </a>
+          <div class="tweet-body">
+            <div class="reply-label">回复 <a href="#">@sora.type</a></div>
+            <p class="tweet-text">我也这么觉得，尤其是字距。调对了，整页都会开始呼吸。</p>
+            <div class="tweet-actions">
+              <button class="act act-reply" type="button" data-act="reply" data-handle="@sora.type">
+                <span class="act-ico"><svg class="ic"><use href="#i-reply" /></svg></span><span class="act-n">2</span>
+              </button>
+              <button class="act act-rt" type="button" data-act="retweet" data-count="1" aria-pressed="false">
+                <span class="act-ico"><svg class="ic"><use href="#i-rt" /></svg></span><span class="act-n">1</span>
+              </button>
+              <button class="act act-like" type="button" data-act="like" data-count="34" aria-pressed="false">
+                <span class="act-ico"><svg class="ic"><use href="#i-heart" /></svg><span class="burst"></span></span><span class="act-n">34</span>
+              </button>
+              <span class="act act-views">
+                <span class="act-ico"><svg class="ic"><use href="#i-views" /></svg></span><span class="act-n">982</span>
+              </span>
+              <button class="act act-bm" type="button" data-act="bookmark" aria-pressed="false" aria-label="收藏">
+                <span class="act-ico"><svg class="ic"><use href="#i-bookmark" /></svg></span>
+              </button>
+              <button class="act act-share" type="button" data-act="share" aria-label="分享">
+                <span class="act-ico"><svg class="ic"><use href="#i-share" /></svg></span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="tweet">
+          <a class="tweet-av" href="#">
+            <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+          </a>
+          <div class="tweet-body">
+            <div class="reply-label">回复 <a href="#">@daily_cafe</a></div>
+            <p class="tweet-text">这家我也去过！靠窗第三个位子光线最好，下午三点的影子会落在杯沿上 ☀️</p>
+            <div class="tweet-actions">
+              <button class="act act-reply" type="button" data-act="reply" data-handle="@daily_cafe">
+                <span class="act-ico"><svg class="ic"><use href="#i-reply" /></svg></span><span class="act-n">1</span>
+              </button>
+              <button class="act act-rt" type="button" data-act="retweet" data-count="4" aria-pressed="false">
+                <span class="act-ico"><svg class="ic"><use href="#i-rt" /></svg></span><span class="act-n">4</span>
+              </button>
+              <button class="act act-like" type="button" data-act="like" data-count="67" aria-pressed="false">
+                <span class="act-ico"><svg class="ic"><use href="#i-heart" /></svg><span class="burst"></span></span><span class="act-n">67</span>
+              </button>
+              <span class="act act-views">
+                <span class="act-ico"><svg class="ic"><use href="#i-views" /></svg></span><span class="act-n">1,204</span>
+              </span>
+              <button class="act act-bm" type="button" data-act="bookmark" aria-pressed="false" aria-label="收藏">
+                <span class="act-ico"><svg class="ic"><use href="#i-bookmark" /></svg></span>
+              </button>
+              <button class="act act-share" type="button" data-act="share" aria-label="分享">
+                <span class="act-ico"><svg class="ic"><use href="#i-share" /></svg></span>
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ 媒体 ============ -->
+      <section class="panel" data-panel="media" id="panel-media" role="tabpanel" hidden>
+        <div class="wall-head">
+          <h2>媒体</h2>
+          <span>6 张图片</span>
+        </div>
+        <div class="media-wall">
+          <div class="media-item" data-zoom><svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-window" /></svg></div>
+          <div class="media-item" data-zoom><svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-latte" /></svg></div>
+          <div class="media-item" data-zoom><svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-flower" /></svg></div>
+          <div class="media-item" data-zoom><svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-cat" /></svg></div>
+          <div class="media-item" data-zoom><svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-book" /></svg></div>
+          <div class="media-item" data-zoom><svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-sky" /></svg></div>
+        </div>
+      </section>
+
+      <!-- ============ 喜欢 ============ -->
+      <section class="panel" data-panel="likes" id="panel-likes" role="tabpanel" hidden>
+        <article class="tweet">
+          <a class="tweet-av" href="#">
+            <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-sora" /></svg></span>
+          </a>
+          <div class="tweet-body">
+            <header class="tweet-head">
+              <div class="who">
+                <span class="name">sora</span>
+                <svg class="badge" viewBox="0 0 24 24"><use href="#i-verified" /></svg>
+                <span class="handle">@sora.type</span><span class="dot">·</span><span class="time">3月10日</span>
+              </div>
+              <button class="more" type="button" data-act="more" aria-label="更多操作"><svg class="ic"><use href="#i-more" /></svg></button>
+            </header>
+            <p class="tweet-text">留白不是空的，是留给呼吸的。
+今天重新排了一遍这套字体，忽然就懂了这句话。</p>
+            <div class="tweet-actions">
+              <button class="act act-reply" type="button" data-act="reply" data-handle="@sora.type">
+                <span class="act-ico"><svg class="ic"><use href="#i-reply" /></svg></span><span class="act-n">18</span>
+              </button>
+              <button class="act act-rt" type="button" data-act="retweet" data-count="140" aria-pressed="false">
+                <span class="act-ico"><svg class="ic"><use href="#i-rt" /></svg></span><span class="act-n">140</span>
+              </button>
+              <button class="act act-like" type="button" data-act="like" data-count="21400" aria-pressed="true">
+                <span class="act-ico"><svg class="ic"><use href="#i-heart" /></svg><span class="burst"></span></span><span class="act-n">2.1万</span>
+              </button>
+              <span class="act act-views">
+                <span class="act-ico"><svg class="ic"><use href="#i-views" /></svg></span><span class="act-n">18.2万</span>
+              </span>
+              <button class="act act-bm" type="button" data-act="bookmark" aria-pressed="false" aria-label="收藏">
+                <span class="act-ico"><svg class="ic"><use href="#i-bookmark" /></svg></span>
+              </button>
+              <button class="act act-share" type="button" data-act="share" aria-label="分享">
+                <span class="act-ico"><svg class="ic"><use href="#i-share" /></svg></span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="tweet">
+          <a class="tweet-av" href="#">
+            <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-momo" /></svg></span>
+          </a>
+          <div class="tweet-body">
+            <header class="tweet-head">
+              <div class="who">
+                <span class="name">もも</span>
+                <span class="handle">@momo_draw</span><span class="dot">·</span><span class="time">3月9日</span>
+              </div>
+              <button class="more" type="button" data-act="more" aria-label="更多操作"><svg class="ic"><use href="#i-more" /></svg></button>
+            </header>
+            <p class="tweet-text">画了一只晒太阳的猫，它看起来比我快乐。</p>
+            <div class="media">
+              <div class="media-grid g1">
+                <div class="media-item" data-zoom>
+                  <svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-cat" /></svg>
+                </div>
+              </div>
+            </div>
+            <div class="tweet-actions">
+              <button class="act act-reply" type="button" data-act="reply" data-handle="@momo_draw">
+                <span class="act-ico"><svg class="ic"><use href="#i-reply" /></svg></span><span class="act-n">9</span>
+              </button>
+              <button class="act act-rt" type="button" data-act="retweet" data-count="52" aria-pressed="false">
+                <span class="act-ico"><svg class="ic"><use href="#i-rt" /></svg></span><span class="act-n">52</span>
+              </button>
+              <button class="act act-like" type="button" data-act="like" data-count="8402" aria-pressed="true">
+                <span class="act-ico"><svg class="ic"><use href="#i-heart" /></svg><span class="burst"></span></span><span class="act-n">8,402</span>
+              </button>
+              <span class="act act-views">
+                <span class="act-ico"><svg class="ic"><use href="#i-views" /></svg></span><span class="act-n">6.4万</span>
+              </span>
+              <button class="act act-bm" type="button" data-act="bookmark" aria-pressed="false" aria-label="收藏">
+                <span class="act-ico"><svg class="ic"><use href="#i-bookmark" /></svg></span>
+              </button>
+              <button class="act act-share" type="button" data-act="share" aria-label="分享">
+                <span class="act-ico"><svg class="ic"><use href="#i-share" /></svg></span>
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ 高亮 ============ -->
+      <section class="panel" data-panel="highlight" id="panel-highlight" role="tabpanel" hidden>
+        <div class="wall-head">
+          <h2>高亮</h2>
+          <span>2 个合集</span>
+        </div>
+
+        <div class="hi-card" data-act="open-highlight">
+          <div class="hi-cover">
+            <svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-sky" /></svg>
+          </div>
+          <div class="hi-body">
+            <h3>2025 年度总结</h3>
+            <p>12 张图 · 一些关于「慢下来」的记录</p>
+            <span class="hi-tag"><svg class="ic" style="width:11px;height:11px;"><use href="#i-sparkle" /></svg>精选</span>
+          </div>
+        </div>
+
+        <div class="hi-card" data-act="open-highlight">
+          <div class="hi-cover">
+            <svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-book" /></svg>
+          </div>
+          <div class="hi-body">
+            <h3>排版笔记合集</h3>
+            <p>关于字距、行高与留白的 8 条私人笔记</p>
+            <span class="hi-tag"><svg class="ic" style="width:11px;height:11px;"><use href="#i-sparkle" /></svg>精选</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ---------------- 右：信息栏 ---------------- -->
+  <aside class="rail">
+    <div class="search">
+      <svg class="ic"><use href="#i-search" /></svg>
+      <input type="search" placeholder="搜索知夏的主页" aria-label="搜索">
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        关于我
+        <svg class="ic"><use href="#i-sparkle" /></svg>
+      </div>
+      <div class="about-top">
+        <span class="av av-56"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+        <div>
+          <b>知夏</b>
+          <span>@zhixia</span>
+        </div>
+      </div>
+      <p class="about-bio">独立视觉设计师，做品牌与界面，也画插画。喜欢雨天、手冲和干净的东西。</p>
+      <div class="about-stats">
+        <div><b>24</b>作品</div>
+        <div><b>38</b>合作</div>
+        <div><b>7</b>年经验</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        我的作品
+        <svg class="ic"><use href="#i-arrow" /></svg>
+      </div>
+      <div class="work-item">
+        <div class="work-thumb"><svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-window" /></svg></div>
+        <div><b>素白 · 品牌视觉</b><span>2025 / 品牌识别</span></div>
+      </div>
+      <div class="work-item">
+        <div class="work-thumb"><svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-latte" /></svg></div>
+        <div><b>MORNING 咖啡馆</b><span>2025 / 包装设计</span></div>
+      </div>
+      <div class="work-item">
+        <div class="work-thumb"><svg class="ph" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><use href="#ph-flower" /></svg></div>
+        <div><b>花期 · 插画集</b><span>2024 / 插画</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">找到我</div>
+      <a class="link-item" href="#"><svg class="ic"><use href="#i-link" /></svg>zhixia.studio<svg class="ic arrow"><use href="#i-arrow" /></svg></a>
+      <a class="link-item" href="#"><svg class="ic"><use href="#i-mail" /></svg>hi@zhixia.studio<svg class="ic arrow"><use href="#i-arrow" /></svg></a>
+      <a class="link-item" href="#"><svg class="ic"><use href="#i-emoji" /></svg>Instagram<svg class="ic arrow"><use href="#i-arrow" /></svg></a>
+      <a class="link-item" href="#"><svg class="ic"><use href="#i-image" /></svg>作品集 PDF<svg class="ic arrow"><use href="#i-arrow" /></svg></a>
+    </div>
+
+    <div class="rail-footer">
+      <a href="#">关于</a> · <a href="#">隐私</a> · <a href="#">条款</a> · <a href="#">无障碍</a><br>
+      © 2025 知夏 · 本页为设计原型，非真实社交平台
+    </div>
+  </aside>
+</div>
+
+<!-- ---------------- 发帖浮层 ---------------- -->
+<div class="overlay" id="composer-overlay" aria-hidden="true">
+  <div class="composer" role="dialog" aria-modal="true" aria-label="发帖">
+    <div class="composer-head">
+      <b>发帖</b>
+      <button class="icon-btn" type="button" id="composer-close" aria-label="关闭"><svg class="ic"><use href="#i-x" /></svg></button>
+    </div>
+    <div class="composer-row">
+      <span class="av av-48"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#av-main" /></svg></span>
+      <textarea class="ta" id="composer-text" placeholder="有什么新鲜事？" maxlength="280"></textarea>
+    </div>
+    <div class="composer-tools">
+      <button class="tool-btn" type="button" aria-label="图片"><svg class="ic"><use href="#i-image" /></svg></button>
+      <button class="tool-btn" type="button" aria-label="GIF"><svg class="ic"><use href="#i-gif" /></svg></button>
+      <button class="tool-btn" type="button" aria-label="投票"><svg class="ic"><use href="#i-poll" /></svg></button>
+      <button class="tool-btn" type="button" aria-label="表情"><svg class="ic"><use href="#i-emoji" /></svg></button>
+      <button class="tool-btn" type="button" aria-label="日程"><svg class="ic"><use href="#i-calendar" /></svg></button>
+      <button class="tool-btn" type="button" aria-label="定位"><svg class="ic"><use href="#i-loc" /></svg></button>
+      <div class="composer-right">
+        <div class="ring" id="ring">
+          <svg viewBox="0 0 36 36"><circle class="ring-bg" cx="18" cy="18" r="15" /><circle class="ring-fg" id="ring-fg" cx="18" cy="18" r="15" /></svg>
+          <span class="ring-n" id="ring-n">0</span>
+        </div>
+        <button class="btn-post-sm" type="button" id="composer-submit" disabled>发布</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------------- 更多菜单 ---------------- -->
+<div class="menu" id="menu" role="menu" aria-hidden="true"></div>
+
+<!-- ---------------- 图片灯箱 ---------------- -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" type="button" id="lb-close" aria-label="关闭"><svg class="ic" style="width:20px;height:20px;"><use href="#i-x" /></svg></button>
+  <div class="lb-stage" id="lb-stage"></div>
+</div>
+
+<!-- ---------------- Toast ---------------- -->
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-text"></span></div>
+
+<!-- ---------------- 移动端底部导航 ---------------- -->
+<nav class="bottom-nav" aria-label="移动端导航">
+  <button type="button" class="is-active"><svg class="ic"><use href="#i-home" /></svg></button>
+  <button type="button"><svg class="ic"><use href="#i-search" /></svg></button>
+  <button type="button" class="fab" data-open-composer aria-label="发帖"><svg class="ic"><use href="#i-pen" /></svg></button>
+  <button type="button"><svg class="ic"><use href="#i-bell" /></svg></button>
+  <button type="button"><svg class="ic"><use href="#i-user" /></svg></button>
+</nav>
+
+<script src="app.js"></script>
+</body>
+</html>

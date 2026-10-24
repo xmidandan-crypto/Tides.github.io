@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>留言区 ｜ 潮汐心事 HeartTides</title>
+<meta name="description" content="想问的问题、想说的话，都可以留在这里。可公开，也可以只留给小汐一个人看。">
+<meta name="theme-color" content="#F9F8F6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+SC:wght@300;400&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">跳到主要内容</a>
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="logo" href="index.html" aria-label="潮汐心事 HeartTides · 回到首页">
+      <svg class="logo-mark" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M7.6 1A5 5 0 0 0 7.6 11A9.4 9.4 0 0 1 7.6 1Z"/></svg>
+      <span class="logo-txt">
+        <span class="logo-cn">潮汐心事</span>
+        <span class="logo-en">HeartTides</span>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="主导航">
+      <a href="about.html">简介</a>
+      <a href="services.html">业务</a>
+      <a href="pricing.html">价格</a>
+      <a href="reviews.html">客返</a>
+      <a href="guestbook.html" aria-current="page">留言</a>
+    </nav>
+
+    <div class="nav-right">
+      <a class="nav-cta u" href="#contact">预约解读</a>
+    </div>
+
+    <button class="burger" id="burger" aria-label="打开菜单" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <nav aria-label="移动端导航">
+    <a class="drawer-link" href="about.html"><i>01</i>个人简介</a>
+    <a class="drawer-link" href="services.html"><i>02</i>个人业务</a>
+    <a class="drawer-link" href="pricing.html"><i>03</i>价格表</a>
+    <a class="drawer-link" href="reviews.html"><i>04</i>客返专区</a>
+    <a class="drawer-link" href="guestbook.html"><i>05</i>留言区</a>
+    <a class="drawer-link" href="#contact"><i>06</i>预约方式</a>
+  </nav>
+  <div class="drawer-foot">
+    <span class="label">Contact</span>
+    微信 · moonkey_heka<br>
+    服务时间 · 每日 20:00 – 24:00<br>
+    <span style="font-family:var(--serif);font-style:italic">Hekate, lead the way.</span>
+  </div>
+</div>
+
+<main id="main" class="page">
+  <div class="wrap">
+    <nav class="crumb" aria-label="面包屑"><a href="index.html">目录</a><span class="sep">/</span><span class="here">留言区</span></nav>
+<div class="sec-head" data-reveal>
+      <div class="sec-head-row">
+        <div>
+          <h2>留言区</h2>
+          <p class="sub">Leave a word, I will read it</p>
+        </div>
+        <div class="sec-folio">
+          <span class="folio-no">06</span>
+          <span class="folio-line"></span>
+          <span class="folio-tag">Guestbook</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="guest-grid">
+      <div data-reveal>
+        <form id="guestForm" novalidate>
+          <div class="field">
+            <input id="gName" name="name" type="text" maxlength="20" placeholder="&#160;" required autocomplete="nickname">
+            <label for="gName">你的昵称 · Required</label>
+          </div>
+
+          <div class="field-select">
+            <span class="flabel" aria-hidden="true">想咨询的业务</span>
+            <select id="gService" name="service" aria-label="想咨询的业务">
+              <option value="塔罗占卜">塔罗占卜</option>
+              <option value="恋爱牌阵">恋爱专区牌阵</option>
+              <option value="占星骰子">占星骰子</option>
+              <option value="选择与工作">选择 / 工作牌阵</option>
+              <option value="灵气疗愈">灵气疗愈</option>
+              <option value="仪式代做">仪式代做</option>
+              <option value="只是想聊聊">只是想说说话</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <textarea id="gText" name="text" maxlength="300" placeholder="&#160;" required></textarea>
+            <label for="gText">留言内容 · 300 字以内</label>
+          </div>
+
+          <label class="check" for="gPublic">
+            <input id="gPublic" type="checkbox" checked>
+            <span>公开这条留言（不勾选则只有我看得到）</span>
+          </label>
+
+          <button type="submit" class="btn">留下这句话 <span class="arr">→</span></button>
+
+          <p class="form-hint">
+            当前为本地演示：留言保存在你自己的浏览器里，刷新不会丢。正式上线时接到后端即可。
+          </p>
+        </form>
+      </div>
+
+      <div data-reveal>
+        <div class="list-title">
+          <span class="label">Messages</span>
+          <span class="label" id="msgCount">03</span>
+        </div>
+        <div class="guest-list" id="guestList" aria-live="polite"></div>
+      </div>
+    </div>
+    <nav class="pager" aria-label="分区翻页">
+      <a href="reviews.html"><span class="p-label">← 上一区</span><span class="p-name">客返专区</span></a>
+      <a href="index.html"><span class="p-label">下一区 →</span><span class="p-name">返回目录</span></a>
+    </nav>
+  </div>
+</main>
+
+<!-- ===================== 预约 ===================== -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div data-reveal>
+        <h2>预约一次解读，<br>把问题<em>留在门口</em></h2>
+        <p>
+          如果你已经走到这里，也许你心里那个问题，已经等你很久了。
+          加上微信，把问题简单地告诉我，我们一起看看牌怎么说。
+        </p>
+        <button type="button" class="btn" id="copyWechat" data-wechat="moonkey_heka">
+          复制微信号 · 预约解读 <span class="arr">→</span>
+        </button>
+      </div>
+
+      <dl class="contact-meta" data-reveal>
+        <div><dt>WeChat</dt><dd>moonkey_heka</dd></div>
+        <div><dt>Email</dt><dd>hello@example.com</dd></div>
+        <div><dt>Hours</dt><dd>每日 20:00 – 24:00</dd></div>
+        <div><dt>Response</dt><dd>按顺序回复，不支持催问</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 页脚 ===================== -->
+<footer class="footer">
+  <div class="footer-in">
+    <div class="footer-top">
+      <div>
+        <div class="f-brand">
+          <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+            <path d="M7.6 1A5 5 0 0 0 7.6 11A9.4 9.4 0 0 1 7.6 1Z"/>
+          </svg>
+          <b>潮汐心事</b>
+          <span class="f-brand-en">HeartTides</span>
+        </div>
+        <p class="f-desc">
+          赫卡忒的追随者。在十字路口点一盏灯，陪你把心事看完，再自己走出去。
+        </p>
+      </div>
+
+      <div>
+        <p class="f-label">Sections</p>
+        <ul class="f-links">
+          <li><a class="u" href="about.html">个人简介</a></li>
+          <li><a class="u" href="services.html">个人业务</a></li>
+          <li><a class="u" href="pricing.html">价格表</a></li>
+          <li><a class="u" href="reviews.html">客返专区</a></li>
+          <li><a class="u" href="guestbook.html">留言区</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="f-label">Contact</p>
+        <ul class="f-links">
+          <li>微信 · moonkey_heka</li>
+          <li>邮箱 · hello@example.com</li>
+          <li>服务时间 · 20:00 – 24:00</li>
+          <li>预约方式 · 私信说明问题</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="disclaimer">
+      <b>免责声明：</b>本站提供的塔罗占卜、占星骰子、灵气疗愈与仪式服务，属于个人信念与心灵陪伴范畴，
+      不构成医疗、心理、法律或投资建议，亦不能替代任何专业诊疗与咨询。
+      所有解读仅供参考，最终选择权与责任始终在你手中。服务对象需年满 18 周岁。
+    </p>
+
+    <div class="copyright">
+      <span>© 2025 潮汐心事 · HeartTides</span>
+      <span>Hekate, lead the way</span>
+    </div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
